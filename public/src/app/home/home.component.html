@@ -1,0 +1,92 @@
+<div id="container">
+    <h1>
+        Rate My Cakes
+    </h1>
+    <div id="top" style="display: flex; flex-direction: row; justify-content: center; align-items: center; align-content: center;">
+        <div id="leftpanel" style="display: flex; margin-right: 100px;">
+            <form (submit)="cakeSubmit()" style="display: flex; flex-direction: column; width: 200px;">
+                <label>
+                    Baker Name
+                </label>
+                <input [(ngModel)]="newCake.bakerFN" class="fields" type="text" name="FN" [ngModelOptions]="{standalone: true}"/>
+                <label>
+                    Baker LastName
+                </label>
+                <input [(ngModel)]="newCake.bakerLN" class="fields" type="text" name="LN" [ngModelOptions]="{standalone: true}"/>
+                <label>
+                    Image URL
+                </label>
+                <input [(ngModel)]="newCake.image" class="fields" type="text" name="image" [ngModelOptions]="{standalone: true}"/>
+                <button class="btn1" type="submit">
+                    Add
+                </button>
+            </form>
+        </div>
+        <div id="rightpanel">
+            <div *ngFor = "let baker of bdBakers">
+                <div id="imgbox" style="display: flex; flex-direction: column; text-align: center;">
+                    <p>
+                        {{baker.firstname}}
+                    </p>
+                    <a (click)="info(baker._id)" ><img class="pic" [src]="baker.image"></a>
+                </div>
+                <div id="formbox">
+                    <form id="rating" (submit)="ratingSubmit(baker._id)" style="display: flex; flex-direction: row; justify-content: center; align-items: center; align-content: center;">
+                        <select class="fields2" name="a" [(ngModel)]="newRating.rating">
+                            <option value="1" >
+                                1
+                            </option>
+                            <option value="2">
+                                2
+                            </option>
+                            <option value="3">
+                                3
+                            </option>
+                            <option value="4">
+                                4
+                            </option>
+                            <option value="5">
+                                5
+                            </option>
+                        </select>
+                        <textarea class="fields2" name="s" [(ngModel)]="newRating.comment"></textarea>
+                        <!-- <input type="hidden" name="cakeId" value="cake._id"> -->
+                        <button class="btn2" type="submit">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="botton" *ngIf="bdRatings.firstname">
+        <h1>
+            Baked by {{bdRatings.firstname}} {{bdRatings.lastname}}
+        </h1> 
+        <div id="imgbox2">
+            <img class="pic2" [src]="bdRatings.image">
+        </div>
+        <div id="details">
+                <h3>
+                    Average rating: {{sum}}
+                </h3>
+            </div>
+        <div *ngFor="let comment of bdRatings.ratings">
+            
+            <h4>
+                Coment
+            </h4>
+            <p>
+                {{comment.comment}}
+            </p>
+            <p>
+                Rating: {{comment.rating}}
+            </p>
+        </div>
+        <div>
+            <button (click)="close()">
+                Close
+            </button>
+        </div>
+    </div>
+</div>
